@@ -30,6 +30,12 @@
       <name>Peter Cummuskey</name>
       <organization>University of Auckland</organization>
     </developer>
+    <developer>
+      <email>k.deng@auckland.ac.nz</email>
+      <id>kdeng</id>
+      <name>Kefeng Deng</name>
+      <organization>University of Auckland</organization>
+    </developer>    
   </developers>
 
   <licenses>
