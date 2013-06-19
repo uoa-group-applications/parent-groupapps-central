@@ -30,6 +30,12 @@
       <name>Peter Cummuskey</name>
       <organization>University of Auckland</organization>
     </developer>
+    <developer>
+      <email>i.benediktovich@auckland.ac.nz</email>
+      <id>deffer</id>
+      <name>Irina Benediktovich</name>
+      <organization>University of Auckland</organization>
+    </developer>	
   </developers>
 
   <licenses>
