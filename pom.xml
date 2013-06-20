@@ -1,15 +1,12 @@
+<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>nz.ac.auckland.groupapps.parent</groupId>
   <artifactId>parent-groupapps-central</artifactId>
   <version>1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-
   <name>University of Auckland Group Apps - Central Parent</name>
-
   <description>Maven Parent for Group Apps Artifacts that will be going into Maven Central.</description>
-
   <url>http://waterfall.auckland.ac.nz</url>
   <developers>
     <developer>
@@ -35,28 +32,26 @@
       <id>kdeng</id>
       <name>Kefeng Deng</name>
       <organization>University of Auckland</organization>
-    </developer>    
-	<developer>
-	  <email>i.benediktovich@auckland.ac.nz</email>
-	  <id>deffer</id>
-	  <name>Irina Benediktovich</name>
-	  <organization>University of Auckland</organization>
-	</developer>	
+    </developer>
+    <developer>
+      <email>i.benediktovich@auckland.ac.nz</email>
+      <id>deffer</id>
+      <name>Irina Benediktovich</name>
+      <organization>University of Auckland</organization>
+    </developer>
     <developer>
       <email>m.cook@auckland.ac.nz</email>
       <id>marnixk</id>
       <name>Marnix Cook</name>
       <organization>University of Auckland</organization>
-    </developer>	
+    </developer>
   </developers>
-
   <licenses>
     <license>
       <name>MIT License</name>
       <url>http://www.opensource.org/licenses/mit-license.php</url>
     </license>
   </licenses>
-
   <!-- this needs to be changed FOR EVERY ARTIFACT -->
   <scm>
     <connection>scm:git:git@github.com:uoa-group-applications/parent-groupapps-central.git</connection>
@@ -64,12 +59,10 @@
     <url>git@github.com:uoa-group-applications/parent-groupapps-central.git</url>
     <tag>HEAD</tag>
   </scm>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <uoa.release>dev</uoa.release>
   </properties>
-
   <distributionManagement>
     <repository>
       <id>sonatype-staging</id>
@@ -82,7 +75,6 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-
   <profiles>
     <profile>
       <!-- adtivate the sonatype profile when a release is being done -->
@@ -113,7 +105,6 @@
       </build>
     </profile>
   </profiles>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -148,7 +139,6 @@
             <fail>true</fail>
           </configuration>
         </plugin>
-
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.4.1</version>
@@ -162,7 +152,8 @@
             <localCheckout>true</localCheckout>
           </configuration>
         </plugin>
-        <plugin> <!-- default to Java 7 -->
+        <plugin>
+          <!-- default to Java 7 -->
           <artifactId>maven-compiler-plugin</artifactId>
           <configuration>
             <source>1.7</source>
