@@ -36,10 +36,16 @@
       <name>Kefeng Deng</name>
       <organization>University of Auckland</organization>
     </developer>    
+	<developer>
+	  <email>i.benediktovich@auckland.ac.nz</email>
+	  <id>deffer</id>
+	  <name>Irina Benediktovich</name>
+	  <organization>University of Auckland</organization>
+	</developer>	
     <developer>
-      <email>i.benediktovich@auckland.ac.nz</email>
-      <id>deffer</id>
-      <name>Irina Benediktovich</name>
+      <email>m.cook@auckland.ac.nz</email>
+      <id>marnixk</id>
+      <name>Marnix Cook</name>
       <organization>University of Auckland</organization>
     </developer>	
   </developers>
