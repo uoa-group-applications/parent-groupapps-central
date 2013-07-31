@@ -1,171 +1,189 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>nz.ac.auckland.groupapps.parent</groupId>
-  <artifactId>parent-groupapps-central</artifactId>
-  <version>1.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>University of Auckland Group Apps - Central Parent</name>
-  <description>Maven Parent for Group Apps Artifacts that will be going into Maven Central.</description>
-  <url>http://waterfall.auckland.ac.nz</url>
-  <developers>
-    <developer>
-      <email>karl.leaning@auckland.ac.nz</email>
-      <id>kleaning</id>
-      <name>Karl Leaning</name>
-      <organization>University of Auckland</organization>
-    </developer>
-    <developer>
-      <email>richard@bluetrainsoftware.com</email>
-      <id>rvowles</id>
-      <name>Richard Vowles</name>
-      <organization>Blue Train Software Ltd</organization>
-    </developer>
-    <developer>
-      <email>p.cummuskey@auckland.ac.nz</email>
-      <id>tzrlk</id>
-      <name>Peter Cummuskey</name>
-      <organization>University of Auckland</organization>
-    </developer>
-    <developer>
-      <email>k.deng@auckland.ac.nz</email>
-      <id>kdeng</id>
-      <name>Kefeng Deng</name>
-      <organization>University of Auckland</organization>
-    </developer>
-    <developer>
-      <email>i.benediktovich@auckland.ac.nz</email>
-      <id>deffer</id>
-      <name>Irina Benediktovich</name>
-      <organization>University of Auckland</organization>
-    </developer>
-    <developer>
-      <email>m.cook@auckland.ac.nz</email>
-      <id>marnixk</id>
-      <name>Marnix Cook</name>
-      <organization>University of Auckland</organization>
-    </developer>
-  </developers>
-  <licenses>
-    <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
-    </license>
-  </licenses>
-  <!-- this needs to be changed FOR EVERY ARTIFACT -->
-  <scm>
-    <connection>scm:git:git@github.com:uoa-group-applications/parent-groupapps-central.git</connection>
-    <developerConnection>scm:git:git@github.com:uoa-group-applications/parent-groupapps-central.git</developerConnection>
-    <url>git@github.com:uoa-group-applications/parent-groupapps-central.git</url>
-    <tag>HEAD</tag>
-  </scm>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <uoa.release>dev</uoa.release>
-  </properties>
-  <distributionManagement>
-    <repository>
-      <id>sonatype-staging</id>
-      <name>oss.sonatype.org Staging Repository</name>
-      <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-snapshots</id>
-      <name>oss.sonatype.org Snapshot Repository</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-  <profiles>
-    <profile>
-      <!-- adtivate the sonatype profile when a release is being done -->
-      <id>sonaytpe</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.1</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-plugin</artifactId>
-          <version>1.8.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.2</version>
-          <configuration>
-            <rules>
-              <requireMavenVersion>
-                <version>[3.0.4,)</version>
-              </requireMavenVersion>
-              <requireReleaseDeps>
-                <!--  Don't allow releases with snapshop deps or parents -->
-                <message>No Snapshots Allowed!</message>
-                <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
-                <searchTransitive>true</searchTransitive>
-              </requireReleaseDeps>
-              <!-- Don't allow accidental inclusion of commons logging or log4j -->
-              <bannedDependencies>
-                <excludes>
-                  <exclude>commons-logging</exclude>
-                  <exclude>commons-logging-api</exclude>
-                </excludes>
-              </bannedDependencies>
-            </rules>
-            <fail>true</fail>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.4.1</version>
-          <configuration>
-            <mavenExecutorId>forked-path</mavenExecutorId>
-            <arguments>-Duoa.release=release</arguments>
-            <preparationGoals>clean enforcer:enforce verify</preparationGoals>
-            <goals>enforcer:enforce deploy</goals>
-            <tagBase>release/${project.groupId}/</tagBase>
-            <pushChanges>false</pushChanges>
-            <localCheckout>true</localCheckout>
-          </configuration>
-        </plugin>
-        <plugin>
-          <!-- default to Java 7 -->
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.5</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>nz.ac.auckland.groupapps.parent</groupId>
+	<artifactId>parent-groupapps-central</artifactId>
+	<version>1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>University of Auckland Group Apps - Central Parent</name>
+	<description>Maven Parent for Group Apps Artifacts that will be going into Maven Central.</description>
+	<url>https://github.com/uoa-group-applications</url>
+
+	<developers>
+		<developer>
+			<email>karl.leaning@auckland.ac.nz</email>
+			<id>kleaning</id>
+			<name>Karl Leaning</name>
+			<organization>University of Auckland</organization>
+		</developer>
+		<developer>
+			<email>richard@bluetrainsoftware.com</email>
+			<id>rvowles</id>
+			<name>Richard Vowles</name>
+			<organization>Blue Train Software Ltd</organization>
+		</developer>
+		<developer>
+			<email>p.cummuskey@auckland.ac.nz</email>
+			<id>tzrlk</id>
+			<name>Peter Cummuskey</name>
+			<organization>University of Auckland</organization>
+		</developer>
+		<developer>
+			<email>k.deng@auckland.ac.nz</email>
+			<id>kdeng</id>
+			<name>Kefeng Deng</name>
+			<organization>University of Auckland</organization>
+		</developer>
+		<developer>
+			<email>i.benediktovich@auckland.ac.nz</email>
+			<id>deffer</id>
+			<name>Irina Benediktovich</name>
+			<organization>University of Auckland</organization>
+		</developer>
+		<developer>
+			<email>m.cook@auckland.ac.nz</email>
+			<id>marnixk</id>
+			<name>Marnix Cook</name>
+			<organization>University of Auckland</organization>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+
+	<!-- this needs to be changed FOR EVERY ARTIFACT -->
+	<scm>
+		<connection>scm:git:git@github.com:uoa-group-applications/parent-groupapps-central.git</connection>
+		<developerConnection>
+			scm:git:git@github.com:uoa-group-applications/parent-groupapps-central.git
+		</developerConnection>
+		<url>git@github.com:uoa-group-applications/parent-groupapps-central.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<uoa.release>dev</uoa.release>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-staging</id>
+			<name>oss.sonatype.org Staging Repository</name>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-snapshots</id>
+			<name>oss.sonatype.org Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<!-- adtivate the sonatype profile when a release is being done -->
+			<id>sonaytpe</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>1.8.1</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.2</version>
+					<configuration>
+						<rules>
+							<requireMavenVersion>
+								<version>[3.0.4,)</version>
+							</requireMavenVersion>
+							<requireReleaseDeps>
+								<!--  Don't allow releases with snapshop deps or parents -->
+								<message>No Snapshots Allowed!</message>
+								<failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
+								<searchTransitive>true</searchTransitive>
+							</requireReleaseDeps>
+							<!-- Don't allow accidental inclusion of commons logging or log4j -->
+							<bannedDependencies>
+								<excludes>
+									<exclude>commons-logging</exclude>
+									<exclude>commons-logging-api</exclude>
+								</excludes>
+							</bannedDependencies>
+						</rules>
+						<fail>true</fail>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<mavenExecutorId>forked-path</mavenExecutorId>
+						<arguments>-Duoa.release=release</arguments>
+						<preparationGoals>clean enforcer:enforce verify</preparationGoals>
+						<goals>enforcer:enforce deploy</goals>
+						<tagBase>release/${project.groupId}/</tagBase>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<!-- default to Java 7 -->
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.5</version>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
