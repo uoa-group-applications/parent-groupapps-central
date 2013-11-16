@@ -1,0 +1,11 @@
+= University of Auckland: Group Applications - Global Parent
+
+All _University of Auckland (UoA): Group Applications_ projects should use this or a decendant of this POM as a parent. 
+
+
+It defines distribution to Maven Central, enforcement rules around SNAPSHOTs, the version of the Java compiler we will use,
+project binding and a flag "uoa.release" that is by default set to "dev", and gets set to "release" when we are releasing the artifact, allowing plugins to use this as a differential trigger.
+
+== License
+
+*All* University of Auckland: Group Applications projects use the MIT Licenses unless specifically stated otherwise.
