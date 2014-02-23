@@ -25,12 +25,6 @@
 			<organization>Blue Train Software Ltd</organization>
 		</developer>
 		<developer>
-			<email>p.cummuskey@auckland.ac.nz</email>
-			<id>tzrlk</id>
-			<name>Peter Cummuskey</name>
-			<organization>University of Auckland</organization>
-		</developer>
-		<developer>
 			<email>k.deng@auckland.ac.nz</email>
 			<id>kdeng</id>
 			<name>Kefeng Deng</name>
@@ -155,7 +149,14 @@
 
 				<plugin>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.1</version>
+					<version>2.4.2</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.scm</groupId>
+              <artifactId>maven-scm-provider-gitexe</artifactId>
+              <version>1.9</version>
+            </dependency>
+          </dependencies>
 					<configuration>
 						<mavenExecutorId>forked-path</mavenExecutorId>
 						<arguments>-Duoa.release=release</arguments>
